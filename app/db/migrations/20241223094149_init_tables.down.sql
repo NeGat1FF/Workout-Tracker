@@ -1,0 +1,10 @@
+DROP EXTENSION IF EXISTS "uuid-ossp";
+DROP TABLE IF EXISTS workout_reports;
+DROP TABLE IF EXISTS scheduled_workouts;
+DROP TABLE IF EXISTS workout_comments;
+DROP TABLE IF EXISTS workout_exercises;
+DROP TABLE IF EXISTS exercise_muscle_groups;
+DROP TABLE IF EXISTS muscle_groups;
+DROP TABLE IF EXISTS exercises;
+DROP TABLE IF EXISTS workouts;
+DROP TABLE IF EXISTS users;
