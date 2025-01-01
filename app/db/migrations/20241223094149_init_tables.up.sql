@@ -6,6 +6,7 @@ CREATE TABLE users (
     user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(20) NOT NULL DEFAULT 'user',
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -53,31 +54,21 @@ CREATE TABLE workout_exercises (
     exercise_id UUID NOT NULL,
     sets INT NOT NULL,
     reps INT NOT NULL,
-    weight DECIMAL(10, 2),
-    rest_period INT DEFAULT 30, -- in seconds
+    weight DECIMAL(10, 2) NOT NULL,
+    rest_period INT NOT NULL,
     FOREIGN KEY (workout_id) REFERENCES workouts(workout_id) ON DELETE CASCADE,
     FOREIGN KEY (exercise_id) REFERENCES exercises(exercise_id) ON DELETE CASCADE
-);
-
--- workout_comments table
-CREATE TABLE workout_comments (
-    comment_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    workout_id UUID NOT NULL,
-    user_id UUID NOT NULL,
-    comment TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (workout_id) REFERENCES workouts(workout_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- scheduled_workouts table
 CREATE TABLE scheduled_workouts (
     schedule_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL,
     workout_id UUID NOT NULL,
     scheduled_date DATE NOT NULL,
     scheduled_time TIME NOT NULL,
-    FOREIGN KEY (workout_id) REFERENCES workouts(workout_id) ON DELETE CASCADE
+    FOREIGN KEY (workout_id) REFERENCES workouts(workout_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- workout_reports table
